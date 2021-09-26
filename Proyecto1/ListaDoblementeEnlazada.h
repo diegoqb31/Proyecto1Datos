@@ -48,10 +48,92 @@ public:
 	listaptr getFinal() const{
 		return final;
 	}
+	
+	//Metodo que obtiene el nodo de la lista por posicion
+	Nodo* obtenerNodoPorPosicion(int pos) {
+		int i = 0;
+		if (inicio == nullptr) {
+			return nullptr;
+		}
+		else {
+			struct Nodo* tmp = inicio;
+			while (tmp != nullptr) {
+				if (++i == pos) {
+					return tmp;
+				}
+				tmp = tmp->siguiente;
+			}
+		}
 
-	void InsertarInicio(const T& val) {
+	}
+
+	//Metodo que intercambia nodos de la lista doble, (Dibujen la lista porque no van a entender ni madre xd)
+	//PROBLEMA CON LOS NODOS ANTERIORES, los siguientes si funcionan
+	void intercambiarNodos(Nodo* n1, Nodo* n2) {
+		Nodo* s1 = n1->siguiente;
+		Nodo* a1 = n1->anterior;
+		Nodo* s2 = n2->siguiente;
+		Nodo* a2 = n2->anterior;
+
+		if (inicio == nullptr) {
+			std::cout << "Imposible realizar el intercambio";
+		}
+
+		else {
+
+			struct Nodo* primero = inicio;
+			if (primero == n1) {
+				n2->siguiente = s1;
+				n2->anterior = a1;
+				n1->siguiente = s2;
+				n1->anterior = a2;
+				inicio = n2;
+			}
+			if (primero == n2) {
+				n1->siguiente = s2;
+				n1->anterior = a2;
+				n2->siguiente = s1;
+				n2->anterior = a1;
+				inicio = n1;
+			}
+
+			struct Nodo* tmp = inicio;
+			while (tmp != nullptr) {
+
+				if (tmp->siguiente == n1) {
+					if (n1->siguiente == s2) {
+						tmp->siguiente = n2;
+					}
+					else {
+						tmp->siguiente = n2;
+						n2->siguiente = s1;
+						n1->siguiente = s2;
+						n1->anterior = a2;
+						n2->anterior = a1;
+					}
+				}
+				else {
+					if (tmp->siguiente == n2) {
+						if (n2->siguiente == s1) {
+							tmp->siguiente = n1;
+						}
+						else {
+							tmp->siguiente = n1;
+							n1->siguiente = s2;
+							n2->siguiente = s1;
+							n1->anterior = a2;
+							n2->anterior = a1;
+						}
+					}
+				}
+				tmp = tmp->siguiente;
+			}
+		}
+	}
+
+
+	void Insertar(const T& val) {
 		listaptr nuevo;
-
 		try {
 			nuevo = new Nodo(val);
 		}
@@ -63,10 +145,13 @@ public:
 			inicio = nuevo;
 		else {
 			listaptr tmp = inicio;
-			nuevo->siguiente = tmp;
-			tmp->anterior = nuevo;
-			inicio = nuevo;
+			while (tmp->siguiente != nullptr)
+				tmp = tmp->siguiente;
+			tmp->siguiente = nuevo;
+			nuevo->anterior = tmp;
+			final = nuevo;
 		}
 	}
+
 
 };
