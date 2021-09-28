@@ -84,22 +84,17 @@ public:
 			struct Nodo* primero = inicio;
 			if (primero == n1) {
 				n2->siguiente = s1;
-				n2->anterior = a1;
 				n1->siguiente = s2;
-				n1->anterior = a2;
 				inicio = n2;
 			}
 			if (primero == n2) {
 				n1->siguiente = s2;
-				n1->anterior = a2;
 				n2->siguiente = s1;
-				n2->anterior = a1;
 				inicio = n1;
 			}
 
 			struct Nodo* tmp = inicio;
 			while (tmp != nullptr) {
-
 				if (tmp->siguiente == n1) {
 					if (n1->siguiente == s2) {
 						tmp->siguiente = n2;
@@ -108,8 +103,6 @@ public:
 						tmp->siguiente = n2;
 						n2->siguiente = s1;
 						n1->siguiente = s2;
-						n1->anterior = a2;
-						n2->anterior = a1;
 					}
 				}
 				else {
@@ -121,15 +114,54 @@ public:
 							tmp->siguiente = n1;
 							n1->siguiente = s2;
 							n2->siguiente = s1;
-							n1->anterior = a2;
-							n2->anterior = a1;
 						}
 					}
 				}
 				tmp = tmp->siguiente;
 			}
 		}
+		struct Nodo* ultimo = final;
+		if (ultimo == n1) {
+			n2->anterior = a1;
+			n1->anterior = a2;
+			final = n2;
+		}
+		if (ultimo == n2) {
+			n1->anterior = a2;
+			n2->anterior = a1;
+			final = n1;
+		}
+
+		struct Nodo* tmp = final;
+		while (tmp != nullptr) {
+
+			if (tmp->anterior == n1) {
+				if (n1->anterior == a2) {
+					tmp->anterior = n2;
+				}
+				else {
+					tmp->anterior = n2;
+					n2->anterior = a1;
+					n1->anterior = a2;
+				}
+			}
+			else {
+				if (tmp->anterior == n2) {
+					if (n2->anterior == a1) {
+						tmp->anterior = n1;
+					}
+					else {
+						tmp->anterior = n1;
+						n1->anterior = a2;
+						n2->anterior = a1;
+					}
+				}
+			}
+			tmp = tmp->anterior;
+		}
+
 	}
+
 
 
 	void Insertar(const T& val) {
