@@ -68,7 +68,7 @@ public:
 	}
 
 	//Metodo que intercambia nodos de la lista doble, (Dibujen la lista porque no van a entender ni madre xd)
-	//PROBLEMA CON LOS NODOS ANTERIORES, los siguientes si funcionan
+	//SOLUCION TEMPORAL, cambiar por algo mas eficiente
 	void intercambiarNodos(Nodo* n1, Nodo* n2) {
 		Nodo* s1 = n1->siguiente;
 		Nodo* a1 = n1->anterior;
