@@ -32,6 +32,7 @@ public:
 	}
 
 	//Metedo que crea el MaxHeap a partir de una lista, se necesita un metodo intercambie dos nodos para poder implementarlo
+	
 	ListaDoblementeEnlazada<T> MaxHeap(ListaDoblementeEnlazada<T> lista) {
 		ListaDoblementeEnlazada<T> listad = lista;
 		std::cout << "Entra al metodo MaxHeap\n";
@@ -64,6 +65,7 @@ public:
 		return listad;
 	}
 
+
 	void MostrarIzquierdaADerecha(const ListaDoblementeEnlazada<int>& lista) {
 		ListaDoblementeEnlazada<int>::listaptr tmp;
 		tmp = lista.getInicio();
@@ -84,8 +86,36 @@ public:
 		std::cout << "\n\n";
 	}
 
-	void MinHeap(ListaDoblementeEnlazada<T> lista) {
-
+	ListaDoblementeEnlazada<T> MinHeap(ListaDoblementeEnlazada<T> lista) {
+		ListaDoblementeEnlazada<T> listad = lista;
+		std::cout << "Entra al metodo MinHeap\n";
+		ListaDoblementeEnlazada<int>::listaptr tmp;
+		tmp = lista.getInicio();
+		int i = 1;
+		while (tmp != nullptr && i <= lista.getSize()) {
+			if (i == 1) {
+				i++;
+				tmp = tmp->siguiente;
+			}
+			ListaDoblementeEnlazada<int>::listaptr hijo = lista.obtenerNodoPorPosicion(i);
+			ListaDoblementeEnlazada<int>::listaptr padre = lista.obtenerNodoPorPosicion(Padre(i));
+			std::cout << i << "(" << hijo->dato << ") > " << Padre(i) << "(" << padre->dato << ")?";
+			if (hijo->dato < padre->dato) {
+				std::cout << " R/Si\n";
+				lista.intercambiarNodos(lista.obtenerNodoPorPosicion(Padre(i)), lista.obtenerNodoPorPosicion(i));
+				std::cout << "Se intercambia " << Padre(i) << " con " << i << "\n\n";
+				MostrarIzquierdaADerecha(lista);
+				MostrarDerechaAIzquierda(lista);
+				listad = this->MinHeap(lista);
+				return listad;
+			}
+			else {
+				std::cout << " R/No\n";
+			}
+			i++;
+			tmp = tmp->siguiente;
+		}
+		return listad;
 	}
 
 	void Heapify() {

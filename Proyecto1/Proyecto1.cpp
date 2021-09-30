@@ -14,15 +14,21 @@ int main()
     ListaDoblementeEnlazada<int> li;
 
 
-    li.Insertar(10);
+    /*li.Insertar(10);
 	li.Insertar(20);
 	li.Insertar(15);
 	li.Insertar(30);
+	li.Insertar(40);*/
+
 	li.Insertar(40);
+	li.Insertar(30);
+	li.Insertar(15);
+	li.Insertar(20);
+	li.Insertar(10);
 
 
-	Heap<int> maxH;
-	li = maxH.MaxHeap(li);
+	Heap<int> hp;
+	li = hp.MinHeap(li);
 
 
 	MostrarIzquierdaADerecha(li);
