@@ -48,19 +48,24 @@ public:
 	listaptr getFinal() const{
 		return final;
 	}
+
+	int getSize() {
+		return size;
+	}
 	
 	//Metodo que obtiene el nodo de la lista por posicion
 	Nodo* obtenerNodoPorPosicion(int pos) {
-		int i = 0;
+		int i = 1;
 		if (inicio == nullptr) {
 			return nullptr;
 		}
 		else {
 			struct Nodo* tmp = inicio;
 			while (tmp != nullptr) {
-				if (++i == pos) {
+				if (i == pos) {
 					return tmp;
 				}
+				i++;
 				tmp = tmp->siguiente;
 			}
 		}
@@ -183,6 +188,7 @@ public:
 			nuevo->anterior = tmp;
 			final = nuevo;
 		}
+		size++;
 	}
 
 
