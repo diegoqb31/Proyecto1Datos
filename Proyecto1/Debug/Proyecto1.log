@@ -1,3 +1,6 @@
 ﻿  Proyecto1.cpp
-C:\Users\Diego Quiros\Desktop\Proyecto1\Proyecto1\ListaDoblementeEnlazada.h(73): warning C4715: 'ListaDoblementeEnlazada<int>::obtenerNodoPorPosicion': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Diego Quiros\Desktop\Proyecto1\Proyecto1\Heap.h(37,10): warning C4018: '<=': no coinciden signed/unsigned
+C:\Users\Diego Quiros\Desktop\Proyecto1\Proyecto1\Heap.h(29): message : al compilar la función del miembro clase plantilla "std::list<int,std::allocator<int>> Heap<int>::MaxHeap(std::list<int,std::allocator<int>>)"
+C:\Users\Diego Quiros\Desktop\Proyecto1\Proyecto1\Proyecto1.cpp(26): message : Vea la referencia a la creación de una instancia de la función plantilla "std::list<int,std::allocator<int>> Heap<int>::MaxHeap(std::list<int,std::allocator<int>>)" que se está compilando
+C:\Users\Diego Quiros\Desktop\Proyecto1\Proyecto1\Proyecto1.cpp(25): message : Vea la referencia a la creación de una instancia de clase plantilla "Heap<int>" que se está compilando
   Proyecto1.vcxproj -> C:\Users\Diego Quiros\Desktop\Proyecto1\Debug\Proyecto1.exe
