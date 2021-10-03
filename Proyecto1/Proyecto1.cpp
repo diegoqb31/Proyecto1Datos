@@ -26,7 +26,7 @@ int main()
 	lista = hp.MaxHeap(lista);
 	hp.MostrarHeap();
 
-	hp.EliminarMaxHeap();
+	//hp.EliminarMaxHeap();
 
 	int n;
 	std::cout << "\nDigite el valor a insertar: ";

@@ -7,6 +7,7 @@ template<class T> class Heap {
 private:
 
 	std::list<T> lista;
+	int id;
 
 	int Padre(int i) {
 		return i / 2;
@@ -138,8 +139,31 @@ public:
 	}
 
 	void InsertarMaxHeap(const T& t) {
-		lista.push_back(t);
-		MaxHeap(lista);
+
+		this->lista.push_back(t);
+
+		typedef std::list<T>::iterator iterador;
+		iterador iter, ultimo = lista.begin(), hijo = lista.begin(), padre = lista.begin();
+		int i = lista.size();
+		T val;
+
+		while (i >= 1 && Padre(i) > 0) {
+
+			std::advance(hijo, i - 1);
+			std::advance(padre, Padre(i) - 1);
+			
+			std::cout << "Se compara " << Padre(i) << " con " << i << "\n\n";
+			if (*hijo > *padre) {
+				val = *hijo;
+				*hijo = *padre;
+				*padre = val;
+			}
+			MostrarHeap();
+			std::cout <<"\n";
+			i = Padre(i);
+			hijo = lista.begin();
+			padre = lista.begin();
+		}
 	}
 
 	void Insertar(const T& val) {
@@ -161,6 +185,10 @@ public:
 			std::cout << *iter << " ";
 		}
 		std::cout << "\n\n";
+	}
+
+	void Heapify() {
+
 	}
 
 };
