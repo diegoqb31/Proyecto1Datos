@@ -1,45 +1,78 @@
-// ProyectoStl.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
-
 #include <iostream>
+#include "ListaDoblementeEnlazada.h"
 #include "Heap.h"
-#include <list>
+
+
+//Declaracion de los metodos Mostrar, unicamente para pruebas de la lista
+void MostrarIzquierdaADerecha(const ListaDoblementeEnlazada<int>&);
+void MostrarDerechaAIzquierda(const ListaDoblementeEnlazada<int>&);
 
 int main()
 {
-	std::list<int> lista;
-	lista.push_back(10);
-	lista.push_back(20);
-	lista.push_back(15);
-	lista.push_back(30);
-	lista.push_back(40);
+
+	//Creando lista doble de tipo int y probandola con distintos valores
+	ListaDoblementeEnlazada<int> li;
 
 
-	/*lista.push_back(40);
-	lista.push_back(30);
-	lista.push_back(15);
-	lista.push_back(20);
-	lista.push_back(10);*/
+	li.Insertar(10);
+	li.Insertar(20);
+	li.Insertar(15);
+	li.Insertar(30);
+	li.Insertar(40);
+
+	/*li.Insertar(40);
+	li.Insertar(30);
+	li.Insertar(15);
+	li.Insertar(20);
+	li.Insertar(10);*/
 
 
 	Heap<int> hp;
-	lista = hp.MaxHeap(lista);
-	hp.MostrarHeap();
-
-	//hp.EliminarMaxHeap();
-
-	int n;
-	std::cout << "\nDigite el valor a insertar: ";
-	std::cin >> n;
-	hp.InsertarMaxHeap(n);
-	hp.MostrarHeap();
-	/*hp.Insertar(1);
-	hp.Insertar(2);
-	hp.Insertar(3);
-	hp.Insertar(4);
-	hp.Insertar(5);
-	hp.Insertar(6);*/
+	li = hp.MaxHeap(li);
 
 
+
+	MostrarIzquierdaADerecha(li);
+	MostrarDerechaAIzquierda(li);
+
+	hp.Eliminar();
+
+	//Probando metodo para intercambiar nodos
+	//int p1, p2;
+	//while (true) {
+	//	std::cout << "\nPrimera posicion: ";
+	//	std::cin >> p1;
+	//	std::cout << "\nSegunda posicion: ";
+	//	std::cin >> p2;
+	//	//li.intercambiarNodos(li.obtenerNodoPorPosicion(p1), li.obtenerNodoPorPosicion(p2));
+	//	li.aux(p1, p2);
+	//	MostrarIzquierdaADerecha(li);
+
+	//	//Problema con los nodos anteriores
+	//	MostrarDerechaAIzquierda(li);
+	//}
+
+	return 0;
 }
 
+//Metodo mostrar de izquierda a derecha
+void MostrarIzquierdaADerecha(const ListaDoblementeEnlazada<int>& lista) {
+	ListaDoblementeEnlazada<int>::listaptr tmp;
+	tmp = lista.getInicio();
+	while (tmp != nullptr) {
+		std::cout << tmp->dato << " ";
+		tmp = tmp->siguiente;
+	}
+	std::cout << "\n\n";
+}
+
+//Metodo mostrar de derecha a izquierda
+void MostrarDerechaAIzquierda(const ListaDoblementeEnlazada<int>& lista) {
+	ListaDoblementeEnlazada<int>::listaptr tmp;
+	tmp = lista.getFinal();
+	while (tmp != nullptr) {
+		std::cout << tmp->dato << " ";
+		tmp = tmp->anterior;
+	}
+	std::cout << "\n\n";
+}
