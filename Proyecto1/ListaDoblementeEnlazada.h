@@ -19,6 +19,7 @@ private:
 
 	void Inicializar() { inicio = nullptr; final = nullptr; size = 0; }
 
+
 public:
 
 	typedef Nodo* listaptr;
@@ -72,99 +73,20 @@ public:
 
 	}
 
-	//Metodo que intercambia nodos de la lista doble, (Dibujen la lista porque no van a entender ni madre xd)
-	//SOLUCION TEMPORAL, cambiar por algo mas eficiente
-	void intercambiarNodos(Nodo* n1, Nodo* n2) {
-		Nodo* s1 = n1->siguiente;
-		Nodo* a1 = n1->anterior;
-		Nodo* s2 = n2->siguiente;
-		Nodo* a2 = n2->anterior;
-
-		if (inicio == nullptr) {
-			std::cout << "Imposible realizar el intercambio";
-		}
-
-		else {
-
-			struct Nodo* primero = inicio;
-			if (primero == n1) {
-				n2->siguiente = s1;
-				n1->siguiente = s2;
-				inicio = n2;
+	void intercambiar(int pos1, int pos2) {
+		if (pos1 <= this->getSize() && pos2 <= this->getSize()) {
+			listaptr nodo1 = this->getInicio();
+			for (int f = 1; f < pos1; f++) {
+				nodo1 = nodo1->siguiente;
 			}
-			if (primero == n2) {
-				n1->siguiente = s2;
-				n2->siguiente = s1;
-				inicio = n1;
+			listaptr nodo2 = this->getInicio();
+			for (int f = 1; f < pos2; f++) {
+				nodo2 = nodo2->siguiente;
 			}
-
-			struct Nodo* tmp = inicio;
-			while (tmp != nullptr) {
-				if (tmp->siguiente == n1) {
-					if (n1->siguiente == s2) {
-						tmp->siguiente = n2;
-					}
-					else {
-						tmp->siguiente = n2;
-						n2->siguiente = s1;
-						n1->siguiente = s2;
-					}
-				}
-				else {
-					if (tmp->siguiente == n2) {
-						if (n2->siguiente == s1) {
-							tmp->siguiente = n1;
-						}
-						else {
-							tmp->siguiente = n1;
-							n1->siguiente = s2;
-							n2->siguiente = s1;
-						}
-					}
-				}
-				tmp = tmp->siguiente;
-			}
+			int aux = nodo1->dato;
+			nodo1->dato = nodo2->dato;
+			nodo2->dato = aux;
 		}
-		struct Nodo* ultimo = final;
-		if (ultimo == n1) {
-			n2->anterior = a1;
-			n1->anterior = a2;
-			final = n2;
-		}
-		if (ultimo == n2) {
-			n1->anterior = a2;
-			n2->anterior = a1;
-			final = n1;
-		}
-
-		struct Nodo* tmp = final;
-		while (tmp != nullptr) {
-
-			if (tmp->anterior == n1) {
-				if (n1->anterior == a2) {
-					tmp->anterior = n2;
-				}
-				else {
-					tmp->anterior = n2;
-					n2->anterior = a1;
-					n1->anterior = a2;
-				}
-			}
-			else {
-				if (tmp->anterior == n2) {
-					if (n2->anterior == a1) {
-						tmp->anterior = n1;
-					}
-					else {
-						tmp->anterior = n1;
-						n1->anterior = a2;
-						n2->anterior = a1;
-					}
-				}
-			}
-			tmp = tmp->anterior;
-		}
-
 	}
 
 
@@ -193,7 +115,7 @@ public:
 
 	void EliminarUltimo() {
 		listaptr tmp = inicio;
-		listaptr tmp2 = inicio->siguiente;
+		listaptr tmp2 = tmp->siguiente;
 		while (tmp2->siguiente != nullptr) {
 			tmp = tmp->siguiente;
 			tmp2 = tmp2->siguiente;
@@ -201,7 +123,7 @@ public:
 		tmp->siguiente = nullptr;
 		delete tmp2;
 		final = tmp;
+		size--;
 	}
-
 
 };
