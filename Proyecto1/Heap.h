@@ -1,9 +1,173 @@
 #pragma once
-#include "ListaDoblementeEnlazada.h"
+//#include "ListaDoblementeEnlazada.h"
 
 
 template<class T> class Heap {
 private:
+
+	template<class T> class ListaDoblementeEnlazada {
+
+	private:
+
+		struct Nodo {
+			T dato;
+			Nodo* siguiente;
+			Nodo* anterior;
+			Nodo(T d, Nodo* sig = nullptr, Nodo* ant = nullptr) : dato{ d }, siguiente{ sig }, anterior{ ant } {}
+		};
+
+		Nodo* inicio;
+		Nodo* final;
+		int size;
+
+		void Inicializar() { inicio = nullptr; final = nullptr; size = 0; }
+
+		bool vacia() {
+			return (inicio == NULL);
+		}
+
+		Nodo* getPrimero() {
+			return inicio;
+		}
+
+		Nodo* getPrimero() const {
+			return inicio;
+		}
+
+		Nodo* getUltimo() {
+			return final;
+		}
+
+		Nodo* getUltimo() const {
+			return final;
+		}
+
+		int getTamano() {
+			return size;
+		}
+
+		Nodo* obtenerPorPosicion(int pos) {
+			int i = 1;
+			if (inicio == nullptr) {
+				return nullptr;
+			}
+			else {
+				struct Nodo* tmp = inicio;
+				while (tmp != nullptr) {
+					if (i == pos) {
+						return tmp;
+					}
+					i++;
+					tmp = tmp->siguiente;
+				}
+			}
+
+		}
+
+		void intercambiarDatoPorPosiciones(int pos1, int pos2) {
+			if (pos1 <= this->getSize() && pos2 <= this->getSize()) {
+				listaptr nodo1 = this->getInicio();
+				for (int f = 1; f < pos1; f++) {
+					nodo1 = nodo1->siguiente;
+				}
+				listaptr nodo2 = this->getInicio();
+				for (int f = 1; f < pos2; f++) {
+					nodo2 = nodo2->siguiente;
+				}
+				int aux = nodo1->dato;
+				nodo1->dato = nodo2->dato;
+				nodo2->dato = aux;
+			}
+		}
+
+		void InsertarNodo(const T& val) {
+			listaptr nuevo;
+			try {
+				nuevo = new Nodo(val);
+			}
+			catch (std::bad_alloc exception) {
+				return;
+			}
+
+			if (inicio == nullptr)
+				inicio = nuevo;
+			else {
+				listaptr tmp = inicio;
+				while (tmp->siguiente != nullptr)
+					tmp = tmp->siguiente;
+				tmp->siguiente = nuevo;
+				nuevo->anterior = tmp;
+				final = nuevo;
+			}
+			size++;
+		}
+
+		void EliminarUltimoNodo() {
+			listaptr tmp = inicio;
+			listaptr tmp2 = tmp->siguiente;
+			while (tmp2->siguiente != nullptr) {
+				tmp = tmp->siguiente;
+				tmp2 = tmp2->siguiente;
+			}
+			tmp->siguiente = nullptr;
+			delete tmp2;
+			final = tmp;
+			size--;
+		}
+
+	public:
+
+		typedef Nodo* listaptr;
+
+		ListaDoblementeEnlazada() {
+			Inicializar();
+		}
+
+		bool listaVacia() {
+			return vacia();
+		}
+
+		listaptr getInicio() {
+			return getPrimero();
+		}
+
+		listaptr getInicio() const {
+			return getPrimero();
+		}
+
+		listaptr getFinal() {
+			return getUltimo();
+		}
+
+		listaptr getFinal() const {
+			return getUltimo();
+		}
+
+		int getSize() {
+			return getTamano();
+		}
+
+		//Metodo que obtiene el nodo de la lista por posicion
+		listaptr obtenerNodoPorPosicion(int pos) {
+			return obtenerPorPosicion(pos);
+
+		}
+
+		void intercambiar(int pos1, int pos2) {
+			intercambiarDatoPorPosiciones(pos1, pos2);
+		}
+
+		void Insertar(const T& val) {
+			InsertarNodo(val);
+		}
+
+		void EliminarUltimo() {
+			EliminarUltimoNodo();
+		}
+
+	};
+
+	//HEAP PRIVADO
 
 	ListaDoblementeEnlazada<T> lista;
 	int tipo;
@@ -24,62 +188,58 @@ private:
 		tipo = 1;
 	}
 
-
-public:
-
-	Heap() {
-		Inicializar();
+	//METODOS HEAP PRIVADO
+	ListaDoblementeEnlazada<T> getListaHeap() {
+		return lista;
 	}
 
-	ListaDoblementeEnlazada<T> crearHeap(ListaDoblementeEnlazada<T> lista, int opcion) {
-		ListaDoblementeEnlazada<T> listad = lista;
+	ListaDoblementeEnlazada<T> nuevoHeap(ListaDoblementeEnlazada<T> list, int opcion) {
+		ListaDoblementeEnlazada<T> listad = list;
 		this->tipo = opcion;
 		//std::cout << "Entra al metodo MaxHeap\n";
 		typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 		Nodoptr tmp;
-		tmp = lista.getInicio()->siguiente;
-		int i = 2;
-		while (tmp != nullptr && i <= lista.getSize()) {
-			/*if (i == 1) {
+		if (list.getInicio() != nullptr) {
+			tmp = list.getInicio()->siguiente;
+			int i = 2;
+			while (tmp != nullptr && i <= list.getSize()) {
+				Nodoptr hijo = list.obtenerNodoPorPosicion(i);
+				Nodoptr padre = list.obtenerNodoPorPosicion(Padre(i));
+				//std::cout << i << "(" << hijo->dato << ") > " << Padre(i) << "(" << padre->dato << ")?";
+				if (opcion == 2) {
+					if (hijo->dato < padre->dato) {
+						//std::cout << " R/Si\n";
+						list.intercambiar(Padre(i), i);
+						//std::cout << "Se intercambia " << Padre(i) << " con " << i << "\n\n";
+						//MostrarIzquierdaADerecha(lista);
+						//MostrarDerechaAIzquierda(lista);
+						listad = this->crearHeap(list, 1);
+						return listad;
+					}
+				}
+				else {
+					if (hijo->dato > padre->dato) {
+						//std::cout << " R/Si\n";
+						//lista.intercambiarNodos(lista.obtenerNodoPorPosicion(Padre(i)), lista.obtenerNodoPorPosicion(i));
+						list.intercambiar(Padre(i), i);
+						//std::cout << "Se intercambia " << Padre(i) << " con " << i << "\n\n";
+						//MostrarIzquierdaADerecha(lista);
+						//MostrarDerechaAIzquierda(lista);
+						listad = this->crearHeap(list, 1);
+						return listad;
+					}
+				}
+
 				i++;
 				tmp = tmp->siguiente;
-			}*/
-			Nodoptr hijo = lista.obtenerNodoPorPosicion(i);
-			Nodoptr padre = lista.obtenerNodoPorPosicion(Padre(i));
-			//std::cout << i << "(" << hijo->dato << ") > " << Padre(i) << "(" << padre->dato << ")?";
-			if (opcion == 2) {
-				if (hijo->dato < padre->dato) {
-					//std::cout << " R/Si\n";
-					lista.intercambiar(Padre(i), i);
-					//std::cout << "Se intercambia " << Padre(i) << " con " << i << "\n\n";
-					//MostrarIzquierdaADerecha(lista);
-					//MostrarDerechaAIzquierda(lista);
-					listad = this->crearHeap(lista, 1);
-					return listad;
-				}
 			}
-			else {
-				if (hijo->dato > padre->dato) {
-					//std::cout << " R/Si\n";
-					//lista.intercambiarNodos(lista.obtenerNodoPorPosicion(Padre(i)), lista.obtenerNodoPorPosicion(i));
-					lista.intercambiar(Padre(i), i);
-					//std::cout << "Se intercambia " << Padre(i) << " con " << i << "\n\n";
-					//MostrarIzquierdaADerecha(lista);
-					//MostrarDerechaAIzquierda(lista);
-					listad = this->crearHeap(lista, 1);
-					return listad;
-				}
-			}
-			
-			i++;
-			tmp = tmp->siguiente;
 		}
 
 		this->lista = listad;
 		return listad;
 	}
 
-	void Eliminar() {
+	void EliminarHeap() {
 		typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 		Nodoptr inicio = this->lista.getInicio();
 		Nodoptr final = this->lista.getFinal();
@@ -94,8 +254,7 @@ public:
 		Heapify();
 	}
 
-
-	void MostrarHeap() {
+	void PrintHeap() {
 		typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 		Nodoptr tmp;
 		tmp = lista.getInicio();
@@ -106,7 +265,7 @@ public:
 		std::cout << "\n\n";
 	}
 
-	void Insertar(const T& t) {
+	void InsertarHeap(const T& t) {
 		std::cout << "\nINSERTAR HEAP\n";
 		this->lista.Insertar(t);
 
@@ -143,7 +302,7 @@ public:
 		}
 	}
 
-	void Heapify() {
+	void HeapifyPriv() {
 		typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 		Nodoptr tmp, l, r;
 		tmp = lista.getFinal();
@@ -187,6 +346,35 @@ public:
 		}
 	}
 
+public:
+
+	Heap() {
+		Inicializar();
+	}
+
+	ListaDoblementeEnlazada<T> getLista() {
+		return getListaHeap();
+	}
+
+	ListaDoblementeEnlazada<T> crearHeap(ListaDoblementeEnlazada<T> list, int opcion) {
+		return nuevoHeap(list, opcion);
+	}
+
+	void Eliminar() {
+		EliminarHeap();
+	}
+
+	void MostrarHeap() {
+		PrintHeap();
+	}
+
+	void Insertar(const T& t) {
+		InsertarHeap(t);
+	}
+
+	void Heapify() {
+		HeapifyPriv();
+	}
 
 };
 
