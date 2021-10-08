@@ -1,7 +1,6 @@
 #pragma once
 #include<iostream>
 
-
 template<class T> class ListaDoblementeEnlazada {
 
 private:
@@ -18,6 +17,30 @@ private:
 	int size;
 
 	void Inicializar() { inicio = nullptr; final = nullptr; size = 0; }
+
+	bool vacia() {
+		return (inicio == NULL);
+	}
+
+	Nodo* getPrimero() {
+		return inicio;
+	}
+
+	Nodo* getPrimero() const {
+		return inicio;
+	}
+
+	Nodo* getUltimo(){
+		return final;
+	}
+
+	Nodo* getUltimo() const {
+		return final;
+	}
+
+	int getTamano() {
+		return size;
+	}
 
 	Nodo* obtenerPorPosicion(int pos) {
 		int i = 1;
@@ -92,34 +115,32 @@ public:
 
 	typedef Nodo* listaptr;
 
-
-
 	ListaDoblementeEnlazada() {
 		Inicializar();
 	}
 
 	bool listaVacia() {
-		return (inicio == NULL);
+		return vacia();
 	}
 
 	listaptr getInicio() {
-		return inicio;
+		return getPrimero();
 	}
 
 	listaptr getInicio() const {
-		return inicio;
+		return getPrimero();
 	}
 
 	listaptr getFinal() {
-		return final;
+		return getUltimo();
 	}
 
 	listaptr getFinal() const {
-		return final;
+		return getUltimo();
 	}
 
 	int getSize() {
-		return size;
+		return getTamano();
 	}
 
 	//Metodo que obtiene el nodo de la lista por posicion
