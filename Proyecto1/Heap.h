@@ -37,13 +37,13 @@ public:
 		//std::cout << "Entra al metodo MaxHeap\n";
 		typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 		Nodoptr tmp;
-		tmp = lista.getInicio();
-		int i = 1;
+		tmp = lista.getInicio()->siguiente;
+		int i = 2;
 		while (tmp != nullptr && i <= lista.getSize()) {
-			if (i == 1) {
+			/*if (i == 1) {
 				i++;
 				tmp = tmp->siguiente;
-			}
+			}*/
 			Nodoptr hijo = lista.obtenerNodoPorPosicion(i);
 			Nodoptr padre = lista.obtenerNodoPorPosicion(Padre(i));
 			//std::cout << i << "(" << hijo->dato << ") > " << Padre(i) << "(" << padre->dato << ")?";
