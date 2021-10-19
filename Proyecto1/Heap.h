@@ -59,7 +59,7 @@ private:
 					tmp = tmp->siguiente;
 				}
 			}
-
+			return nullptr;
 		}
 
 		void intercambiarDatoPorPosiciones(int pos1, int pos2) {
@@ -72,7 +72,7 @@ private:
 				for (int f = 1; f < pos2; f++) {
 					nodo2 = nodo2->siguiente;
 				}
-				int aux = nodo1->dato;
+				T& aux = nodo1->dato;
 				nodo1->dato = nodo2->dato;
 				nodo2->dato = aux;
 			}
@@ -241,12 +241,12 @@ private:
 		typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 		Nodoptr inicio = this->lista.getInicio();
 		Nodoptr final = this->lista.getFinal();
-		std::cout << "\nELIMINAR HEAP\n";
+		//std::cout << "\nELIMINAR HEAP\n";
 
 		this->lista.intercambiar(1, lista.getSize());
 		this->lista.EliminarUltimo();
 
-		MostrarHeap();
+		//MostrarHeap();
 
 		//crearHeap(this->lista, tipo);
 		Heapify();
@@ -257,14 +257,14 @@ private:
 		Nodoptr tmp;
 		tmp = lista.getInicio();
 		while (tmp != nullptr) {
-			std::cout << tmp->dato << " ";
+			std::cout << tmp->dato;
 			tmp = tmp->siguiente;
 		}
 		std::cout << "\n\n";
 	}
 
 	void InsertarHeap(const T& t) {
-		std::cout << "\nINSERTAR HEAP\n";
+		//std::cout << "\nINSERTAR HEAP\n";
 		this->lista.Insertar(t);
 
 		typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
@@ -310,19 +310,19 @@ private:
 			l = lista.obtenerNodoPorPosicion(HijoIzquierdo(i));
 			r = lista.obtenerNodoPorPosicion(HijoDerecho(i));
 			if (this->tipo == 2) {
-				std::cout << "Se compara " << i << " con " << HijoIzquierdo(i) << "\n\n";
+				//std::cout << "Se compara " << i << " con " << HijoIzquierdo(i) << "\n\n";
 				if (HijoIzquierdo(i) < lista.getSize() && l->dato < tmp->dato) {
 					val = l->dato;
 					l->dato = tmp->dato;
 					tmp->dato = val;
-					Heapify();
+					HeapifyPriv();
 				}
-				std::cout << "Se compara " << i << " con " << HijoDerecho(i) << "\n\n";
+				//std::cout << "Se compara " << i << " con " << HijoDerecho(i) << "\n\n";
 				if (HijoDerecho(i) < lista.getSize() && r->dato < tmp->dato) {
 					val = r->dato;
 					r->dato = tmp->dato;
 					tmp->dato = val;
-					Heapify();
+					HeapifyPriv();
 				}
 			}
 			else {
@@ -330,13 +330,13 @@ private:
 					val = l->dato;
 					l->dato = tmp->dato;
 					tmp->dato = val;
-					Heapify();
+					HeapifyPriv();
 				}
 				if (HijoDerecho(i) < lista.getSize() && r->dato > tmp->dato) {
 					val = r->dato;
 					r->dato = tmp->dato;
 					tmp->dato = val;
-					Heapify();
+					HeapifyPriv();
 				}
 			}
 			i--;
@@ -375,4 +375,3 @@ public:
 	}
 
 };
-

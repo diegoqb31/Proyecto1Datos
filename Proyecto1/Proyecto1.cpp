@@ -1,11 +1,13 @@
 #include <iostream>
 #include "Heap.h"
+#include "ColaDePrioridad.h"
+#include "Paciente.h"
 
 int main()
 {
 
 
-	Heap<int> hp;
+	/*Heap<int> hp;
 	hp.crearHeap(hp.getLista(), 1);
 
 	hp.MostrarHeap();
@@ -20,7 +22,20 @@ int main()
 	hp.MostrarHeap();
 
 	hp.Heapify();
-	hp.MostrarHeap();
+	hp.MostrarHeap();*/
+
+	ColaDePrioridad<Paciente> cola;
+	cola.crearColaDePrioridad();
+
+
+	cola.Insertar(*(new Paciente("Diego", 100)));
+	cola.Insertar(*(new Paciente("Kevin", 200)));
+	cola.Insertar(*(new Paciente("Jairo", 150)));
+	cola.Insertar(*(new Paciente("Tigre", 300)));
+	cola.Insertar(*(new Paciente("Pablo", 400)));
+	cola.MostrarCola();
+	cola.Eliminar();
+	cola.MostrarCola();
 
 	return 0;
 }
