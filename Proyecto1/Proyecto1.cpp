@@ -1,28 +1,9 @@
 #include <iostream>
-#include "Heap.h"
 #include "ColaDePrioridad.h"
 #include "Paciente.h"
 
 int main()
 {
-
-
-	/*Heap<int> hp;
-	hp.crearHeap(hp.getLista(), 1);
-
-	hp.MostrarHeap();
-
-	hp.Insertar(11);
-	hp.Insertar(5);
-	hp.Insertar(6);
-	hp.Insertar(15);
-	hp.MostrarHeap();
-
-	hp.Eliminar();
-	hp.MostrarHeap();
-
-	hp.Heapify();
-	hp.MostrarHeap();*/
 
 	ColaDePrioridad<Paciente> cola;
 	cola.crearColaDePrioridad();
