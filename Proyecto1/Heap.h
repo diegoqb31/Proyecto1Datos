@@ -1,12 +1,13 @@
 #pragma once
 
+//Uso de templates
 template<class T> class Heap {
 private:
-
+	//Instancia la lista doblementente enlazada con su nodo y sus atributos
 	template<class T> class ListaDoblementeEnlazada {
 
 	private:
-
+		//Creando el nodo de la lista doblemente enlazada 
 		struct Nodo {
 			T dato;
 			Nodo* siguiente;
@@ -17,9 +18,9 @@ private:
 		Nodo* inicio;
 		Nodo* final;
 		int size;
-
+		//Inicializando Heap
 		void Inicializar() { inicio = nullptr; final = nullptr; size = 0; }
-
+		//Metodos basico de la contruccion
 		bool vacia() {
 			return (inicio == NULL);
 		}
@@ -43,7 +44,7 @@ private:
 		int getTamano() {
 			return size;
 		}
-
+		//Este metodo retorna el valor del nodo por posicion
 		Nodo* obtenerPorPosicion(int pos) {
 			int i = 1;
 			if (inicio == nullptr) {
@@ -61,7 +62,7 @@ private:
 			}
 
 		}
-
+		//Metodo utilizado para intercambiar los datos de los nodos por medio de las posiciones
 		void intercambiarDatoPorPosiciones(int pos1, int pos2) {
 			if (pos1 <= this->getSize() && pos2 <= this->getSize()) {
 				listaptr nodo1 = this->getInicio();
@@ -77,7 +78,7 @@ private:
 				nodo2->dato = aux;
 			}
 		}
-
+		//Metodo utilizado para insertar un nodo, si el inicio esta vacio, lo inserta en la primera posicion y si no se cumple esta condicion, lo inserta en el siguiente
 		void InsertarNodo(const T& val) {
 			listaptr nuevo;
 			try {
@@ -99,7 +100,7 @@ private:
 			}
 			size++;
 		}
-
+		//Metodo se encarga de eliminar el ultimo nodo del Heap por mdeio de dos punteros temporales
 		void EliminarUltimoNodo() {
 			listaptr tmp = inicio;
 			listaptr tmp2 = tmp->siguiente;
@@ -114,9 +115,9 @@ private:
 		}
 
 	public:
-
+		//Forma utlizada para ocultar el nodo
 		typedef Nodo* listaptr;
-
+		// Uso de wrappers para la encapsulacion de los metodos de la lista
 		ListaDoblementeEnlazada() {
 			Inicializar();
 		}
@@ -150,15 +151,15 @@ private:
 			return obtenerPorPosicion(pos);
 
 		}
-
+		//Metodo que intercambia las posiciones
 		void intercambiar(int pos1, int pos2) {
 			intercambiarDatoPorPosiciones(pos1, pos2);
 		}
-
+		//Metodo que inserta valores
 		void Insertar(const T& val) {
 			InsertarNodo(val);
 		}
-
+		//Metodo que elimina el ultimo nodo
 		void EliminarUltimo() {
 			EliminarUltimoNodo();
 		}
@@ -169,24 +170,25 @@ private:
 
 	ListaDoblementeEnlazada<T> lista;
 	int tipo;
-
+	//Valor del nodo padre
 	int Padre(int i) {
 		return i / 2;
 	}
-
+	//Valor del nodo hijo izquierdo
 	int HijoIzquierdo(int i) {
 		return 2 * i;
 	}
-
+	//Valor del nodo hijo derecho
 	int HijoDerecho(int i) {
 		return (2 * i) + 1;
 	}
-
+	//Metodo inizializador para el Heap privado
 	void Inicializar() {
 		tipo = 1;
 	}
 
 	//METODOS HEAP PRIVADO
+	//Retorna la lista que esta instanciada en el heap
 	ListaDoblementeEnlazada<T> getListaHeap() {
 		return lista;
 	}
@@ -236,7 +238,7 @@ private:
 		this->lista = listad;
 		return listad;
 	}
-
+	//Metodo para eliminar todo el heap
 	void EliminarHeap() {
 		typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 		Nodoptr inicio = this->lista.getInicio();
@@ -251,7 +253,7 @@ private:
 		//crearHeap(this->lista, tipo);
 		Heapify();
 	}
-
+	//Metodo para imprimir el heap
 	void PrintHeap() {
 		typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 		Nodoptr tmp;
@@ -262,7 +264,7 @@ private:
 		}
 		std::cout << "\n\n";
 	}
-
+	//Metodo que inserta valores en el heap
 	void InsertarHeap(const T& t) {
 		std::cout << "\nINSERTAR HEAP\n";
 		this->lista.Insertar(t);
@@ -299,7 +301,7 @@ private:
 
 		}
 	}
-
+	//Metodo para mantener la propiedad del nodo de forma recursiva
 	void HeapifyPriv() {
 		typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 		Nodoptr tmp, l, r;
@@ -345,7 +347,7 @@ private:
 	}
 
 public:
-
+	//Metodos wrapper del heap
 	Heap() {
 		Inicializar();
 	}
@@ -375,4 +377,5 @@ public:
 	}
 
 };
+
 
