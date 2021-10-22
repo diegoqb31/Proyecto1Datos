@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ColaDePrioridad.h" />
+    <ClInclude Include="MenuPrincipal.h" />
     <ClInclude Include="Paciente.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,10 +1,13 @@
 #include <iostream>
-#include "ColaDePrioridad.h"
-#include "Paciente.h"
-
+//#include "ColaDePrioridad.h"
+//#include "Paciente.h"
+#include "MenuPrincipal.h"
 int main()
 {
+	MenuPrincipal menu;
+	menu.mostrar();
 
+	/*
 	//Se instancia la cola de priridad
 	ColaDePrioridad<Paciente> cola;
 
@@ -33,7 +36,7 @@ int main()
 			break;
 		}*/
 		//Se elimina a un paciente de la lista que ya ha sido atendido
-		cola.Eliminar();
+		/*cola.Eliminar();
 		std::cout << "Ahora el paciente que estaba de primero en la cola ha sido atendido\n";
 		std::cout << "Esta es la lista actualizada de pacientes segun prioridad de atencion:\n";
 		cola.MostrarCola();
@@ -41,7 +44,7 @@ int main()
 		std::cin >> resp;
 		if (resp != 1)
 			break;
-	}
+	}*/
 
 	return 0;
 }
