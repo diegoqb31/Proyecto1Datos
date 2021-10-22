@@ -217,7 +217,7 @@ private:
 					Nodoptr hijo = list.obtenerNodoPorPosicion(i);
 					Nodoptr padre = list.obtenerNodoPorPosicion(Padre(i));
 					//std::cout << i << "(" << hijo->dato << ") > " << Padre(i) << "(" << padre->dato << ")?";
-					if (opcion == 2) {
+					if (tipo == 2) {
 						if (hijo->dato < padre->dato) {
 							//std::cout << " R/Si\n";
 							list.intercambiar(Padre(i), i);
@@ -250,10 +250,11 @@ private:
 			return listad;
 		}
 
-		void EliminarHeap() {
+		T EliminarHeap() {
 			typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 			Nodoptr inicio = this->lista.getInicio();
 			Nodoptr final = this->lista.getFinal();
+			T aux = inicio->dato;
 			//std::cout << "\nELIMINAR HEAP\n";
 
 			this->lista.intercambiar(1, lista.getSize());
@@ -263,6 +264,7 @@ private:
 
 			//crearHeap(this->lista, tipo);
 			Heapify();
+			return aux;
 		}
 
 		void PrintHeap() {
@@ -371,8 +373,8 @@ private:
 			return nuevoHeap(list, opcion);
 		}
 
-		void Eliminar() {
-			EliminarHeap();
+		T Eliminar() {
+			return EliminarHeap();
 		}
 
 		void MostrarHeap() {
@@ -394,6 +396,14 @@ private:
 public:
 
 	ColaDePrioridad() {
+		/*int n;
+		std::cout << "Digite (1) si desea que la cola de prioridad trabaje con elementos maximos o (2) con minimos: ";
+		std::cin >> n;
+		heap.crearHeap(heap.getLista(), n);*/
+	}
+
+	ColaDePrioridad(const ColaDePrioridad& nueva){
+		heap = nueva.heap;
 	}
 
 	void crearColaDePrioridad() {
@@ -407,8 +417,8 @@ public:
 		heap.Insertar(val);
 	}
 
-	void Eliminar() {
-		heap.Eliminar();
+	T Pop() {
+		return heap.Eliminar();
 	}
 
 	void MostrarCola() {

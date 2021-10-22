@@ -1,11 +1,29 @@
 #include <iostream>
-//#include "ColaDePrioridad.h"
-//#include "Paciente.h"
+#include "ColaDePrioridad.h"
+#include "Paciente.h"
 #include "MenuPrincipal.h"
 int main()
 {
 	MenuPrincipal menu;
 	menu.mostrar();
+
+
+	/*ColaDePrioridad<Paciente> cola;
+	cola.crearColaDePrioridad();
+	cola.Insertar(*(new Paciente("Diego", 100)));
+	cola.Insertar(*(new Paciente("Kevin", 200)));
+	cola.Insertar(*(new Paciente("Jairo", 150)));
+	cola.Insertar(*(new Paciente("Tigre", 300)));
+	cola.Insertar(*(new Paciente("Pablo", 400)));
+	cola.MostrarCola();
+
+	std::cout << "Constructor de copia: \n";
+
+	ColaDePrioridad<Paciente> cola2(cola);
+	cola2.MostrarCola();*/
+
+	
+
 
 	/*
 	//Se instancia la cola de priridad

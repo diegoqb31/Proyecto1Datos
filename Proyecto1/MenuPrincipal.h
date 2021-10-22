@@ -101,9 +101,7 @@ private:
 	//una vez que los "atiende" los elimina de la cola 
 	void atiendePaciente()
 	{
-		
-			cola.Eliminar();
-			std::cout << "Ahora el paciente que estaba de primero en la cola ha sido atendido\n";
+			std::cout<<"Paciente antendido -> "<<cola.Pop().getNombre()<<"\n";
 			std::cout << "Esta es la lista actualizada de pacientes segun prioridad de atencion:\n";
 			cola.MostrarCola();
 			
