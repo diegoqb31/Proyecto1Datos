@@ -109,14 +109,21 @@ private:
 			void EliminarUltimoNodo() {
 				listaptr tmp = inicio;
 				listaptr tmp2 = tmp->siguiente;
-				while (tmp2->siguiente != nullptr) {
-					tmp = tmp->siguiente;
-					tmp2 = tmp2->siguiente;
+				if (tmp->siguiente == nullptr) {
+					delete tmp;
+					inicio = nullptr;
+					final = nullptr;
 				}
-				tmp->siguiente = nullptr;
-				delete tmp2;
-				final = tmp;
-				size--;
+				else {
+					while (tmp2->siguiente != nullptr) {
+						tmp = tmp->siguiente;
+						tmp2 = tmp2->siguiente;
+					}
+					tmp->siguiente = nullptr;
+					delete tmp2;
+					final = tmp;
+					size--;
+				}
 			}
 
 		public:
@@ -413,7 +420,7 @@ public:
 	}*/
 
 	int getSize() {
-
+		return heap.getLista().getSize();
 	}
 };
 
