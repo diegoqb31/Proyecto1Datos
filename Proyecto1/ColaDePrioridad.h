@@ -136,6 +136,15 @@ private:
 				}
 			}
 
+			void copiaLista(const ListaDoblementeEnlazada<T>& l2) {
+				listaptr tmp = inicio;
+				listaptr tmp2 = l2.inicio;
+				while (tmp2 != nullptr) {
+					this->Insertar(tmp2->dato);
+					tmp2 = tmp2->siguiente;
+				}
+			}
+
 		public:
 			
 			//Forma utlizada para ocultar el nodo
@@ -144,6 +153,10 @@ private:
 			// Uso de wrappers para la encapsulacion de los metodos de la lista
 			ListaDoblementeEnlazada() {
 				Inicializar();
+			}
+
+			void ListaCopia(const ListaDoblementeEnlazada<T>& l2) {
+				copiaLista(l2);
 			}
 			
 			bool listaVacia() {
@@ -190,6 +203,7 @@ private:
 			void EliminarUltimo() {
 				EliminarUltimoNodo();
 			}
+
 
 		};
 
@@ -340,6 +354,7 @@ private:
 		
 		//Metodo para mantener la propiedad del nodo de forma recursiva
 		void HeapifyPriv() {
+			this->MostrarHeap();
 			typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 			Nodoptr tmp, l, r;
 			tmp = lista.getFinal();
@@ -349,15 +364,17 @@ private:
 				l = lista.obtenerNodoPorPosicion(HijoIzquierdo(i));
 				r = lista.obtenerNodoPorPosicion(HijoDerecho(i));
 				if (this->tipo == 2) {
-					//std::cout << "Se compara " << i << " con " << HijoIzquierdo(i) << "\n\n";
-					if (HijoIzquierdo(i) < lista.getSize() && l->dato < tmp->dato) {
+					//std::cout << "Se compara " << i <<" con " << HijoIzquierdo(i) << "\n\n";
+					if (HijoIzquierdo(i) <= lista.getSize() && l->dato < tmp->dato) {
+						//std::cout << "Se hace el intercambio \n";
 						val = l->dato;
 						l->dato = tmp->dato;
 						tmp->dato = val;
 						HeapifyPriv();
 					}
 					//std::cout << "Se compara " << i << " con " << HijoDerecho(i) << "\n\n";
-					if (HijoDerecho(i) < lista.getSize() && r->dato < tmp->dato) {
+					if (HijoDerecho(i) <= lista.getSize() && r->dato < tmp->dato) {
+						//std::cout << "Se hace el intercambio \n";
 						val = r->dato;
 						r->dato = tmp->dato;
 						tmp->dato = val;
@@ -365,13 +382,13 @@ private:
 					}
 				}
 				else {
-					if (HijoIzquierdo(i) < lista.getSize() && l->dato > tmp->dato) {
+					if (HijoIzquierdo(i) <= lista.getSize() && l->dato > tmp->dato) {
 						val = l->dato;
 						l->dato = tmp->dato;
 						tmp->dato = val;
 						HeapifyPriv();
 					}
-					if (HijoDerecho(i) < lista.getSize() && r->dato > tmp->dato) {
+					if (HijoDerecho(i) <= lista.getSize() && r->dato > tmp->dato) {
 						val = r->dato;
 						r->dato = tmp->dato;
 						tmp->dato = val;
@@ -383,10 +400,19 @@ private:
 			}
 		}
 
+		void CopiaHeap(const Heap<T>& h) {
+			this->tipo = h.tipo;
+			lista.ListaCopia(h.lista);
+		}
+
 	public:
 		//Metodos wrapper del heap
 		Heap() {
 			Inicializar();
+		}
+
+		void HeapCopia(const Heap<T>& h) {
+			CopiaHeap(h);
 		}
 
 		ListaDoblementeEnlazada<T> getLista() {
@@ -420,15 +446,11 @@ private:
 public:
 	//Constructor por defecto de la cola de prioridad
 	ColaDePrioridad() {
-		/*int n;
-		std::cout << "Digite (1) si desea que la cola de prioridad trabaje con elementos maximos o (2) con minimos: ";
-		std::cin >> n;
-		heap.crearHeap(heap.getLista(), n);*/
 	}
 	
 	//Constructor de copia de la cola de prioridad
-	ColaDePrioridad(const ColaDePrioridad& nueva){
-		heap = nueva.heap;
+	ColaDePrioridad(const ColaDePrioridad& colaHecha){
+		heap.HeapCopia(colaHecha.heap);
 	}
 
 	//Metodo que determina (segun las preferencias del usuario) si la cola va a 
@@ -455,9 +477,6 @@ public:
 		heap.MostrarHeap();
 	}
 
-	/*bool ColaVacia() {
-
-	}*/
 	//Metodo que devuele el tamano 
 	//de la cola de prioridad (de acuerdo a los objetos contenidos en esta)
 	int getSize() {

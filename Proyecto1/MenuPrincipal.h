@@ -14,7 +14,7 @@ public:
 	//Metodo con switch que ejecuta las opciones de acuerdo a la seleccion del usuario
 	void mostrar()
 	{
-		const int opcionSalida = 4;
+		const int opcionSalida = 5;
 		int opcion;
 		creacionCola();
 		do {
@@ -31,10 +31,13 @@ public:
 			case 3:
 				this->atiendePaciente();
 				break;
+			case 4:
+				this->probarConstructorDeCopia();
+				break;
 			case opcionSalida:
 				break;
 			default:
-				cerr << "Opcion invalida, digite una opcion nuevamente" << endl;
+				cout << "Opcion invalida, digite una opcion nuevamente" << endl;
 			}
 			system("pause");
 		} while (opcion != opcionSalida);
@@ -47,7 +50,7 @@ private:
 	void creacionCola()
 	{
 		cout << "================================================\n";
-		cout << "      Bienvenido al sistema de atencion de urgencias\n";
+		cout << " Bienvenido al sistema de atencion de urgencias\n";
 		cout << "================================================\n";
 		std::cout << "Por aca puede elegir el orden en el que seran atendidos los pacientes segun la gravedad de su padecimiento:\n";
 		cola.crearColaDePrioridad();
@@ -64,7 +67,8 @@ private:
 		cout << "[1] Agregar pacientes al sistema \n";
 		cout << "[2] Consultar la lista de pacientes disponibles \n";
 		cout << "[3] Atender a un paciente \n";
-		cout << "[4] Salir \n";
+		cout << "[4] Probar constructor de copia \n";
+		cout << "[5] Salir \n";
 		cout << "================================================\n";
 		cin >> opcion;
 		system("cls");
@@ -79,7 +83,9 @@ private:
 		std::string nombre;
 		int gravedad;
 
-		std::cout << "Ingrese los datos del paciente\n";
+		cout << "================================================\n";
+		cout << "		 Nuevo Paciente\n";
+		cout << "================================================\n";
 		std::cout << "Ingrese el nombre del Paciente\n";
 		std::cin >> nombre;
 		std::cout << "Ingrese el grado de gravedad de la salud del paciente\n";
@@ -92,8 +98,16 @@ private:
 	//Muestra la cola de pacientes que esperan ser atenndidos
 	void muestraPacientes()
 	{
-		cola.MostrarCola();
-		system("pause");
+		cout << "================================================\n";
+		cout << "              Lista de Pacientes\n";
+		cout << "================================================\n";
+		if (cola.getSize() == 0) {
+			std::cout << "La lista esta vacia \n";
+		}
+		else {
+			cola.MostrarCola();
+		}
+		
 	}
 
 
@@ -101,11 +115,25 @@ private:
 	//una vez que los "atiende" los elimina de la cola 
 	void atiendePaciente()
 	{
-			std::cout<<"Paciente antendido -> "<<cola.Pop().getNombre()<<"\n";
+		cout << "================================================\n";
+		cout << "	       Atender Paciente\n";
+		cout << "================================================\n";
+		if (cola.getSize() == 0) {
+			std::cout << "La lista esta vacia \n";
+		}
+		else {
+			std::cout << "Paciente antendido -> " << cola.Pop().getNombre() << "\n";
 			std::cout << "Esta es la lista actualizada de pacientes segun prioridad de atencion:\n";
 			cola.MostrarCola();
-			
-		
-		system("pause");
+		}
+	}
+
+	void probarConstructorDeCopia() {
+		cout << "================================================\n";
+		cout << "	       Constructor de Copia\n";
+		cout << "================================================\n";
+		std::cout << "Se crea una lista a partir de la anterior y se muestra\n";
+		ColaDePrioridad<Paciente> copia(cola);
+		copia.MostrarCola();
 	}
 };
