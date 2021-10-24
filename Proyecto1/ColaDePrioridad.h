@@ -388,6 +388,7 @@ private:
 			}
 		}
 
+		//Recibe un objeto tipo Heap y crea una copia de este
 		void CopiaHeap(const Heap<T>& h) {
 			this->tipo = h.tipo;
 			lista.ListaCopia(h.lista);
