@@ -32,7 +32,8 @@ private:
 			bool vacia() {
 				return (inicio == NULL);
 			}
-
+			
+			//retorna el primer nodo de la lista
 			Nodo* getPrimero() {
 				return inicio;
 			}
@@ -40,7 +41,8 @@ private:
 			Nodo* getPrimero() const {
 				return inicio;
 			}
-
+			
+			//retorna el ultimo nodo de la lista
 			Nodo* getUltimo() {
 				return final;
 			}
@@ -48,7 +50,8 @@ private:
 			Nodo* getUltimo() const {
 				return final;
 			}
-
+			
+			//retorna el tamano de la lista
 			int getTamano() {
 				return size;
 			}
@@ -135,7 +138,8 @@ private:
 					size--;
 				}
 			}
-
+			
+			//Metodo que recibe una lista doblemente enlazada y la copia para agregarla al Heap
 			void copiaLista(const ListaDoblementeEnlazada<T>& l2) {
 				listaptr tmp = inicio;
 				listaptr tmp2 = l2.inicio;
@@ -154,23 +158,28 @@ private:
 			ListaDoblementeEnlazada() {
 				Inicializar();
 			}
-
+			
+			//Copia una lista y la agrega al Heap
 			void ListaCopia(const ListaDoblementeEnlazada<T>& l2) {
 				copiaLista(l2);
 			}
 			
+			//Devuelve un valor booleano dependiendo del estado de la lista
 			bool listaVacia() {
 				return vacia();
 			}
 
+			//Devuelve el primer nodo de la lista doblemente enlazada
 			listaptr getInicio() {
 				return getPrimero();
 			}
 
+			
 			listaptr getInicio() const {
 				return getPrimero();
 			}
 
+			//Devuelve el ultimo nodo de la lista doblemente enlazada
 			listaptr getFinal() {
 				return getUltimo();
 			}
@@ -179,6 +188,7 @@ private:
 				return getUltimo();
 			}
 
+			//Devuelve el tamano de la lista doblemente enlazada
 			int getSize() {
 				return getTamano();
 			}
@@ -238,6 +248,8 @@ private:
 			return lista;
 		}
 
+		//Metodo que crea un nuevo Heap a partir de que recibe una lista doblemente enlazada y un entero 
+		//que dependiendo su valor permitira trabajar con un MaxHeap o MinHeap
 		ListaDoblementeEnlazada<T> nuevoHeap(ListaDoblementeEnlazada<T> list, int opcion) {
 			ListaDoblementeEnlazada<T> listad = list;
 			this->tipo = opcion;
@@ -407,34 +419,41 @@ private:
 
 	public:
 		//Metodos wrapper del heap
-		Heap() {
+		//Metodo que crea e inizializa el heap 
 			Inicializar();
 		}
 
+		//Constructor de copia de la clase Heap
 		void HeapCopia(const Heap<T>& h) {
 			CopiaHeap(h);
 		}
 
+		//Metodo que retorna la lista doblemente enlazada con la que se esta trabajando
 		ListaDoblementeEnlazada<T> getLista() {
 			return getListaHeap();
 		}
 
+		//Crea el Heap de acuerdo a las preferencias del usuario (MaxHeap/MinHeap) 
 		ListaDoblementeEnlazada<T> crearHeap(ListaDoblementeEnlazada<T> list, int opcion) {
 			return nuevoHeap(list, opcion);
 		}
 
+		//Metodo que retorna y elimina el elemento que esta en el tope del Heap
 		T Eliminar() {
 			return EliminarHeap();
 		}
 
+		//Metodo para imprimir el contenido del Heap
 		void MostrarHeap() {
 			PrintHeap();
 		}
 
+		//Metodo que agrega un elemento en el Heap
 		void Insertar(const T& t) {
 			InsertarHeap(t);
 		}
 
+		//Metodo que ayuda a menatener la propiedad del Heap como tal
 		void Heapify() {
 			HeapifyPriv();
 		}
@@ -476,11 +495,18 @@ public:
 	void MostrarCola() {
 		heap.MostrarHeap();
 	}
-
+	
+	//*Podriamos eliminar este metodo*
 	//Metodo que devuele el tamano 
 	//de la cola de prioridad (de acuerdo a los objetos contenidos en esta)
 	int getSize() {
 		return heap.getLista().getSize();
+	}
+	
+	//Metodo que retorna verdadero si la cola de prioridad se encuentra vacia
+	bool colaVacia()
+	{
+		return heap.getLista().listaVacia();	
 	}
 };
 
