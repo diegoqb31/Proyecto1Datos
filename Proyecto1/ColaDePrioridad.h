@@ -253,7 +253,6 @@ private:
 		ListaDoblementeEnlazada<T> nuevoHeap(ListaDoblementeEnlazada<T> list, int opcion) {
 			ListaDoblementeEnlazada<T> listad = list;
 			this->tipo = opcion;
-			//std::cout << "Entra al metodo MaxHeap\n";
 			typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 			Nodoptr tmp;
 			if (list.getInicio() != nullptr) {
@@ -262,26 +261,16 @@ private:
 				while (tmp != nullptr && i <= list.getSize()) {
 					Nodoptr hijo = list.obtenerNodoPorPosicion(i);
 					Nodoptr padre = list.obtenerNodoPorPosicion(Padre(i));
-					//std::cout << i << "(" << hijo->dato << ") > " << Padre(i) << "(" << padre->dato << ")?";
 					if (tipo == 2) {
 						if (hijo->dato < padre->dato) {
-							//std::cout << " R/Si\n";
 							list.intercambiar(Padre(i), i);
-							//std::cout << "Se intercambia " << Padre(i) << " con " << i << "\n\n";
-							//MostrarIzquierdaADerecha(lista);
-							//MostrarDerechaAIzquierda(lista);
 							listad = this->crearHeap(list, 1);
 							return listad;
 						}
 					}
 					else {
 						if (hijo->dato > padre->dato) {
-							//std::cout << " R/Si\n";
-							//lista.intercambiarNodos(lista.obtenerNodoPorPosicion(Padre(i)), lista.obtenerNodoPorPosicion(i));
 							list.intercambiar(Padre(i), i);
-							//std::cout << "Se intercambia " << Padre(i) << " con " << i << "\n\n";
-							//MostrarIzquierdaADerecha(lista);
-							//MostrarDerechaAIzquierda(lista);
 							listad = this->crearHeap(list, 1);
 							return listad;
 						}
@@ -302,14 +291,10 @@ private:
 			Nodoptr inicio = this->lista.getInicio();
 			Nodoptr final = this->lista.getFinal();
 			T aux = inicio->dato;
-			//std::cout << "\nELIMINAR HEAP\n";
 
 			this->lista.intercambiar(1, lista.getSize());
 			this->lista.EliminarUltimo();
 
-			//MostrarHeap();
-
-			//crearHeap(this->lista, tipo);
 			Heapify();
 			return aux;
 		}
@@ -328,7 +313,6 @@ private:
 
 		//Metodo que inserta valores en el heap
 		void InsertarHeap(const T& t) {
-			//std::cout << "\nINSERTAR HEAP\n";
 			this->lista.Insertar(t);
 
 			typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
@@ -341,7 +325,6 @@ private:
 				nodoHijo = lista.obtenerNodoPorPosicion(hijo);
 				nodoPadre = lista.obtenerNodoPorPosicion(padre);
 
-				//std::cout << "Se compara " << padre << " con " << hijo << "\n\n";
 				if (this->tipo == 2) {
 					if (nodoHijo->dato < nodoPadre->dato) {
 						val = nodoHijo->dato;
@@ -358,9 +341,6 @@ private:
 				}
 				hijo = Padre(hijo);
 				padre = Padre(hijo);
-				//MostrarHeap();
-				//std::cout << "\n";
-
 			}
 		}
 		
@@ -376,17 +356,13 @@ private:
 				l = lista.obtenerNodoPorPosicion(HijoIzquierdo(i));
 				r = lista.obtenerNodoPorPosicion(HijoDerecho(i));
 				if (this->tipo == 2) {
-					//std::cout << "Se compara " << i <<" con " << HijoIzquierdo(i) << "\n\n";
 					if (HijoIzquierdo(i) <= lista.getSize() && l->dato < tmp->dato) {
-						//std::cout << "Se hace el intercambio \n";
 						val = l->dato;
 						l->dato = tmp->dato;
 						tmp->dato = val;
 						HeapifyPriv();
 					}
-					//std::cout << "Se compara " << i << " con " << HijoDerecho(i) << "\n\n";
 					if (HijoDerecho(i) <= lista.getSize() && r->dato < tmp->dato) {
-						//std::cout << "Se hace el intercambio \n";
 						val = r->dato;
 						r->dato = tmp->dato;
 						tmp->dato = val;
@@ -420,6 +396,7 @@ private:
 	public:
 		//Metodos wrapper del heap
 		//Metodo que crea e inizializa el heap 
+		Heap(){
 			Inicializar();
 		}
 
@@ -494,13 +471,6 @@ public:
 	//Metodo que muestra los elementos que se encuentran contenidos dentro de la cola de prioridad
 	void MostrarCola() {
 		heap.MostrarHeap();
-	}
-	
-	//*Podriamos eliminar este metodo*
-	//Metodo que devuele el tamano 
-	//de la cola de prioridad (de acuerdo a los objetos contenidos en esta)
-	int getSize() {
-		return heap.getLista().getSize();
 	}
 	
 	//Metodo que retorna verdadero si la cola de prioridad se encuentra vacia
