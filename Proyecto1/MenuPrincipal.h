@@ -128,6 +128,8 @@ private:
 		}
 	}
 
+	//Se crea un constructor de copia que replica todos los elementos 
+	//que estan contenidos dentro de la cola de prioridad
 	void probarConstructorDeCopia() {
 		cout << "================================================\n";
 		cout << "	       Constructor de Copia\n";
