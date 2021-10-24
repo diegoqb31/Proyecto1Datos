@@ -101,7 +101,7 @@ private:
 		cout << "================================================\n";
 		cout << "              Lista de Pacientes\n";
 		cout << "================================================\n";
-		if (cola.getSize() == 0) {
+		if (cola.colaVacia() == true) {
 			std::cout << "La lista esta vacia \n";
 		}
 		else {
@@ -118,7 +118,7 @@ private:
 		cout << "================================================\n";
 		cout << "	       Atender Paciente\n";
 		cout << "================================================\n";
-		if (cola.getSize() == 0) {
+		if (cola.colaVacia() == true) {
 			std::cout << "La lista esta vacia \n";
 		}
 		else {
