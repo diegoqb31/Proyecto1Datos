@@ -8,7 +8,7 @@ int main()
 	return 0;
 }
 
-/*Autores: Diego Quiros Brenes, Jairo Ulloa Rodriguez y Kevn Brenes Cerdas
+/*Autores: Diego Quiros Brenes 402440902 Grupo 10am, Jairo Ulloa Rodriguez 402340696 Grupo 8am y Kevin Brenes Cerdas 116800332 Grupo8am
 Recursos consultados:
 - Abdul Bari. (2019, 8 marzo). 2.6.3 Heap - Heap Sort - Heapify - Priority Queues [Vídeo]. YouTube. https://www.youtube.com/watch?v=HqPJF2L5h9U
 - Algo2Fiuba. (2019, 15 septiembre). 05 - 01 TDA Cola de Prioridades y Heaps [Vídeo]. YouTube. https://www.youtube.com/watch?v=BhDLf-Vm0ag
