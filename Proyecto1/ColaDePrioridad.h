@@ -5,11 +5,10 @@ template<class T> class ColaDePrioridad{
 
 private:
 
-#pragma once
 	//Clase Heap basada en una lista doblemente enlazada
 	template<class T> class Heap {
 	private:
-		//Instancia la lista doblementente enlazada con su nodo y sus atributos
+		//Se crea la lista doblementente enlazada con su nodo y sus atributos
 		template<class T> class ListaDoblementeEnlazada {
 
 		private:
@@ -28,12 +27,12 @@ private:
 			//Inicializando Heap
 			void Inicializar() { inicio = nullptr; final = nullptr; size = 0; }
 			
-			//Metodos basicos de la construccion
+			//Indica si la lista doblemente enlazada está vacía
 			bool vacia() {
-				return (inicio == NULL);
+				return (inicio == nullptr);
 			}
 			
-			//retorna el primer nodo de la lista
+			//Metodos que retornan el primer nodo de la lista
 			Nodo* getPrimero() {
 				return inicio;
 			}
@@ -42,7 +41,7 @@ private:
 				return inicio;
 			}
 			
-			//retorna el ultimo nodo de la lista
+			//Metodos que retornan el ultimo nodo de la lista
 			Nodo* getUltimo() {
 				return final;
 			}
@@ -51,7 +50,7 @@ private:
 				return final;
 			}
 			
-			//retorna el tamano de la lista
+			//Retorna el tamaño de la lista
 			int getTamano() {
 				return size;
 			}
@@ -92,9 +91,9 @@ private:
 				}
 			}
 			
-			//Metodo utilizado para insertar un nodo, si el inicio esta vacio, 
+			//Metodo utilizado para insertar un nodo, si el inicio esta vacio,
 			//lo inserta en la primera posicion y si no se cumple esta condicion,
-			//lo inserta en el siguiente
+			//lo inserta en en el nodo que apunte a nullptr como siguiente
 			void InsertarNodo(const T& val) {
 				listaptr nuevo;
 				try {
@@ -126,6 +125,7 @@ private:
 					delete tmp;
 					inicio = nullptr;
 					final = nullptr;
+					size--;
 				}
 				else {
 					while (tmp2->siguiente != nullptr) {
@@ -139,7 +139,7 @@ private:
 				}
 			}
 			
-			//Metodo que recibe una lista doblemente enlazada y la copia para agregarla al Heap
+			//Metodo que recibe una lista doblemente enlazada y la copia
 			void copiaLista(const ListaDoblementeEnlazada<T>& l2) {
 				listaptr tmp = inicio;
 				listaptr tmp2 = l2.inicio;
@@ -159,7 +159,7 @@ private:
 				Inicializar();
 			}
 			
-			//Copia una lista y la agrega al Heap
+			//Copia una lista
 			void ListaCopia(const ListaDoblementeEnlazada<T>& l2) {
 				copiaLista(l2);
 			}
@@ -217,22 +217,22 @@ private:
 
 		};
 
-		//HEAP PRIVADO
+		//Parte privada del Heap
 
 		ListaDoblementeEnlazada<T> lista;
 		int tipo;
 		
-		//Valor del nodo padre
+		//Posición del nodo padre
 		int Padre(int i) {
 			return i / 2;
 		}
 		
-		//Valor del nodo hijo izquierdo
+		//Posición nodo hijo izquierdo
 		int HijoIzquierdo(int i) {
 			return 2 * i;
 		}
 		
-		//Valor del nodo hijo derecho
+		//Posición del nodo hijo derecho
 		int HijoDerecho(int i) {
 			return (2 * i) + 1;
 		}
@@ -242,14 +242,19 @@ private:
 			tipo = 1;
 		}
 
-		//METODOS HEAP PRIVADO
 		//Retorna la lista que esta instanciada en el heap
 		ListaDoblementeEnlazada<T> getListaHeap() {
 			return lista;
 		}
 
-		//Metodo que crea un nuevo Heap a partir de que recibe una lista doblemente enlazada y un entero 
-		//que dependiendo su valor permitira trabajar con un MaxHeap o MinHeap
+		//CrearHeap, Recibe por parámetro una lista doblemente enlazada y un entero
+		//llamado opción, este entero indica el tipo de Heap con el que se trabajará,
+		//si el entero es 1 se trabaja con MaxHeap y si es 2 se trabaja con MinHeap,
+		//por defector se crea un MaxHeap. El metodo compara cada uno de los nodos padres 
+		//con sus hijos para asegurarse de que se cumplen las propiedades y en caso de 
+		//hacerse un intercambio de padre e hijo se llama recursivamente al metodo para 
+		//volver a revisar la lista desde el incio. Se retorna una lista doblemente enlazada
+		//con el fin de utilizarla recursivamente y al final asignarla al heap.
 		ListaDoblementeEnlazada<T> nuevoHeap(ListaDoblementeEnlazada<T> list, int opcion) {
 			ListaDoblementeEnlazada<T> listad = list;
 			this->tipo = opcion;
@@ -261,17 +266,19 @@ private:
 				while (tmp != nullptr && i <= list.getSize()) {
 					Nodoptr hijo = list.obtenerNodoPorPosicion(i);
 					Nodoptr padre = list.obtenerNodoPorPosicion(Padre(i));
+					//MinHeap
 					if (tipo == 2) {
 						if (hijo->dato < padre->dato) {
 							list.intercambiar(Padre(i), i);
-							listad = this->crearHeap(list, 1);
+							listad = this->nuevoHeap(list, 1);
 							return listad;
 						}
 					}
+					//MaxHeap
 					else {
 						if (hijo->dato > padre->dato) {
 							list.intercambiar(Padre(i), i);
-							listad = this->crearHeap(list, 1);
+							listad = this->nuevoHeap(list, 1);
 							return listad;
 						}
 					}
@@ -285,7 +292,10 @@ private:
 			return listad;
 		}
 		
-		//Metodo que retorna y elimina el elemento que esta en el tope del Heap
+		//Metodo Eliminar, intercambia el primer elemento(el de maxima prioridad) con
+		//el último y luego lo elimina, luego se utiliza el Heapify para mantener las
+		//propiedades del heap. Se retorna el elemento eliminado con el fin de utilizarlo
+		//en el pop de la cola de prioridad.
 		T EliminarHeap() {
 			typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 			Nodoptr inicio = this->lista.getInicio();
@@ -311,7 +321,10 @@ private:
 			std::cout << "\n\n";
 		}
 
-		//Metodo que inserta valores en el heap
+		//Insertar, se inserta el elemento al final del Heap y para mantener
+		//las propiedades se compara con sus padres en cadena, es decir, el nodo hijo
+		//se compara con el padre y luego el hijo pasa a ser el padre para compararse
+		//con su nuevo padre, así sucesivamente hasta que se cumplan las propiedades del Heap.
 		void InsertarHeap(const T& t) {
 			this->lista.Insertar(t);
 
@@ -344,9 +357,12 @@ private:
 			}
 		}
 		
-		//Metodo para mantener la propiedad del nodo de forma recursiva
+		//Heapify, Metodo que se encarga de cumplir las propiedades del heap
+		//este empieza por el último nodo comparandolo con sus hijos y así sucesivamente
+		//hasta llegar al incio, en caso de haber alguna modificación se vuelve a llamar
+		//recursivamente al método para volver al comprobar todo de nuevo, ya que hubieron
+		//modificaciones que puedieron afectar las propiedades del Heap
 		void HeapifyPriv() {
-			this->MostrarHeap();
 			typedef ListaDoblementeEnlazada<T>::listaptr Nodoptr;
 			Nodoptr tmp, l, r;
 			tmp = lista.getFinal();
@@ -388,7 +404,8 @@ private:
 			}
 		}
 
-		//Recibe un objeto tipo Heap y crea una copia de este
+		//Recibe un objeto tipo Heap y crea una copia de este,
+		//además asigna el tipo de Heap con respecto al recibido
 		void CopiaHeap(const Heap<T>& h) {
 			this->tipo = h.tipo;
 			lista.ListaCopia(h.lista);
@@ -452,6 +469,7 @@ public:
 
 	//Metodo que determina (segun las preferencias del usuario) si la cola va a 
 	//trabajar/darle prioridad a elementos maximos o minimos (MaxHeap/MinHeap)
+	//y en base a esto crea un nuevo Heap
 	void crearColaDePrioridad() {
 		int n;
 		std::cout<<"Digite (1) si desea que la cola de prioridad trabaje con elementos maximos o (2) con minimos: ";

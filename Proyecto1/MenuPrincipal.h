@@ -8,7 +8,6 @@ private:
 	ColaDePrioridad<Paciente> cola;
 	Paciente paciente;
 
-
 public:
 
 	//Metodo con switch que ejecuta las opciones de acuerdo a la seleccion del usuario
@@ -94,7 +93,7 @@ private:
 	}
 
 
-	//Muestra la cola de pacientes que esperan ser atenndidos
+	//Muestra la cola de pacientes que esperan ser atendidos
 	void muestraPacientes()
 	{
 		cout << "================================================\n";
@@ -130,11 +129,26 @@ private:
 	//Se crea un constructor de copia que replica todos los elementos 
 	//que estan contenidos dentro de la cola de prioridad
 	void probarConstructorDeCopia() {
+		std::string nombre;
+		int gravedad;
 		cout << "================================================\n";
 		cout << "	       Constructor de Copia\n";
 		cout << "================================================\n";
 		std::cout << "Se crea una lista a partir de la anterior y se muestra\n";
 		ColaDePrioridad<Paciente> copia(cola);
+		copia.MostrarCola();
+		std::cout << "Inserte un paciente a la nueva cola\n";
+		std::cout << "Ingrese el nombre del Paciente\n";
+		std::cin >> nombre;
+		std::cout << "Ingrese el grado de gravedad de la salud del paciente\n";
+		std::cin >> gravedad;
+
+		copia.Insertar(*(new Paciente(nombre, gravedad)));
+
+		std::cout << "Cola Original:\n";
+		cola.MostrarCola();
+
+		std::cout << "Nueva Cola:\n";
 		copia.MostrarCola();
 	}
 };

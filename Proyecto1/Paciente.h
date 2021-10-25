@@ -4,7 +4,6 @@ using namespace std;
 class Paciente
 {
 private:
-	
 
 	void IniciarPaciente() {
 		this->nombre = "";
@@ -52,7 +51,6 @@ public:
 	bool operator ==(Paciente& p) {
 		return(getGravedad() == p.getGravedad());
 	}
-
 	
 	friend ostream& operator<<(ostream& os, Paciente& p) {
 		os << "Nombre: "<< p.getNombre()<< " - Gravedad: " << p.getGravedad()<< "\n";
